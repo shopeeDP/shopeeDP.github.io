@@ -311,10 +311,9 @@
         
           
             <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了发扬光大Shopee DP小组 前端团队<strong>一如既往的酷爱工作的热情</strong>，我们建立了这个博客，以表达我们对工作<strong>近乎疯狂的热爱之情</strong>。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h4 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h4><p><code>hexo</code>: 3.7.1<br><code>node</code>: v8.11.1<br><code>git</code>: 2.16.3</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>首先去下载<a href="https://github.com/shopeeDP/our_blog.git" target="_blank" rel="noopener">源码</a></p>
-<p>接着安装hexo</p>
-<pre><code>npm install -g hexo
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>这里分为两部分，一部分是博客源码，另一部分是操作博客。<br>博客源码存放在github上，相当于博客的砖砖瓦瓦；hexo则是操作工具，用于将这些砖瓦建起来。</p>
+<h3 id="一、博客源码"><a href="#一、博客源码" class="headerlink" title="一、博客源码"></a>一、博客源码</h3><p>这里是我们的<a href="https://github.com/shopeeDP/our_blog.git" target="_blank" rel="noopener">源码</a>，通过git来进行操作管理。<br>每次写博客前记得pull，写完博客发布后别忘了push！</p>
+<h3 id="二、操作博客"><a href="#二、操作博客" class="headerlink" title="二、操作博客"></a>二、操作博客</h3><h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><pre><code>npm install -g hexo
 </code></pre><p>hexo安装完成后，安装依赖包</p>
 <pre><code>npm install
 </code></pre><p>这里是hexo的一些常用命令，不需要记，后面用到了再来看就行  </p>
@@ -330,264 +329,30 @@ hexo clean  # 清除缓存文件（db.json）和已生成的静态文件（publi
 </code></pre><p>接着发布到git上</p>
 <pre><code>hexo d
 </code></pre><p>就可以在github上看到我们的博客了，从<a href="https://shopeedp.github.io/" target="_blank" rel="noopener">这里</a>进入</p>
-<h4 id="发表文章"><a href="#发表文章" class="headerlink" title="发表文章"></a>发表文章</h4><p>运行新建文章的命令</p>
+<h5 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h5><p>运行新建文章的命令</p>
 <pre><code>hexo n &quot;文章名字&quot;
 </code></pre><p>可以看到在本地的 ./source/_post/文件夹中已经新生成了一个md文件，hexo中文章是用markdown来写的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title: my new post #可以改成中文的，如“新文章”</span><br><span class="line">date: 2018-06-20 17:16:15 #发表日期，一般不改动</span><br><span class="line">categories: blog #文章文类</span><br><span class="line">tags: [文章] #文章标签，多于一项时用这种格式，只有一项时使用tags: blog</span><br><span class="line">---</span><br><span class="line">#这里是正文，用markdown写</span><br></pre></td></tr></table></figure></p>
-<p>写完之后通过</p>
+<h5 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h5><p>markdown中插入图片的语法</p>
+<pre><code>![Alt text](image path)
+</code></pre><ol>
+<li>对于网上图片，只需要将图片的链接地址写入 <code>image path</code>即可；</li>
+<li>对于本地图片，需要将图片存入<code>/source/images/</code>文件夹中，再将相对地址 <code>/images/图片名称</code> 写入 <code>image path</code>，例如</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Dk]&#123;/images/WechatIMG2.jpeg&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/WechatIMG2.jpeg" alt="aa"></p>
+<ol start="3">
+<li>由于markdown没有控制图片大小的语法，所以要控制图片大小只能通过<code>&lt;img&gt;</code>标签实现，例如</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&apos;/images/WechatIMG2.jpeg&apos; style=&apos;width: 200px;&apos;/&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/WechatIMG2.jpeg" style="width: 200px;"></p>
+<h5 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h5><p>写完之后通过</p>
 <pre><code>hexo s
 </code></pre><p>在本地预览效果，满意之后再发布到git上，但是这里要注意，最好在前面再加上hexo clean以清除缓存文件和已生成的静态文件，避免没法正常提交新文件的错误。</p>
 <pre><code>hexo clean
 hexo g
 hexo d
 </code></pre><p>将文章同步到github上。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="http://tengj.top/2016/02/22/hexo1/" target="_blank" rel="noopener">嘟嘟独立博客 hexo干活系列：（一）hexo+github搭建个人独立博客</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/hello-DP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DP FE">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SHOPEE DP FE">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/20/hello-DP/" itemprop="url">hello DP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-20T15:51:38+08:00">
-                2018-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="HELLO"><a href="#HELLO" class="headerlink" title="HELLO"></a>HELLO</h2><h4 id="welcome-to-Shopee-DP-FE-blog"><a href="#welcome-to-Shopee-DP-FE-blog" class="headerlink" title="welcome to Shopee DP FE blog!"></a>welcome to Shopee DP FE blog!</h4><h5 id="hahahaha"><a href="#hahahaha" class="headerlink" title="hahahaha"></a>hahahaha</h5>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/20/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="DP FE">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SHOPEE DP FE">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/20/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-20T15:46:06+08:00">
-                2018-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h4 id="三、参考"><a href="#三、参考" class="headerlink" title="三、参考"></a>三、参考</h4><p><a href="http://tengj.top/2016/02/22/hexo1/" target="_blank" rel="noopener">嘟嘟独立博客 hexo干活系列：（一）hexo+github搭建个人独立博客</a></p>
 
           
         
@@ -669,7 +434,7 @@ hexo d
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -682,7 +447,7 @@ hexo d
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
