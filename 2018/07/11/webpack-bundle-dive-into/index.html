@@ -89,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/webpack-bundle-dive-into/1.jpeg">
 <meta property="og:image" content="http://yoursite.com/images/webpack-bundle-dive-into/2.png">
-<meta property="og:updated_time" content="2018-07-11T08:06:05.000Z">
+<meta property="og:updated_time" content="2018-08-03T10:12:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析 webpack 打包机制">
 <meta name="twitter:description" content="简单的分析一下 webpack 打包后的结果">
@@ -235,9 +235,43 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -373,9 +407,9 @@
 <li><p>自执行函数最后调用 <code>__webpack_require__(__webpack_require__.s = 2)</code> 并传入了入口模块的 id，这样整个应用就跑起来了。</p>
 </li>
 </ol>
-<h1 id="模块异步加载"><a href="#模块异步加载" class="headerlink" title="模块异步加载"></a>模块异步加载</h1><p>假设我们的入口模块代码如下：</p>
+<h1 id="模块异步加载"><a href="#模块异步加载" class="headerlink" title="模块异步加载"></a>模块异步加载</h1><p>假设我们的入口模块代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'./page1'</span>).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./page2'</span>).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./page3'</span>).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./page4'</span>).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>打包后的结果：</p>
+<p>打包后的结果：</p>
 <p><em>bundle.js</em></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123; <span class="comment">// webpackBootstrap</span></span><br><span class="line">  <span class="comment">// install a JSONP callback for chunk loading</span></span><br><span class="line">  <span class="keyword">var</span> parentJsonpFunction = <span class="built_in">window</span>[<span class="string">"webpackJsonp"</span>];</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 从异步加载的文件中安装模块</span></span><br><span class="line"><span class="comment">   * @param &#123;*&#125; chunkIds 异步加载的文件中存放的需要安装的模块对应的 chunk id（包括自己），可以理解为所依赖的 chunk id</span></span><br><span class="line"><span class="comment">   * @param &#123;*&#125; moreModules 表示该 chunk 加载后新带来的 modules</span></span><br><span class="line"><span class="comment">   * @param &#123;*&#125; executeModules 需要执行的模块，可能为空</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="built_in">window</span>[<span class="string">"webpackJsonp"</span>] = <span class="function"><span class="keyword">function</span> <span class="title">webpackJsonpCallback</span>(<span class="params">chunkIds, moreModules, executeModules</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> moduleId, chunkId, i = <span class="number">0</span>, resolves = [], result;</span><br><span class="line">    <span class="keyword">for</span>(;i &lt; chunkIds.length; i++) &#123;</span><br><span class="line">      chunkId = chunkIds[i];</span><br><span class="line">      <span class="keyword">if</span>(installedChunks[chunkId])</span><br><span class="line">        <span class="comment">// 将 resolve 放到队列中后面统一执行</span></span><br><span class="line">        resolves.push(installedChunks[chunkId][<span class="number">0</span>]);</span><br><span class="line">      <span class="comment">// 标记该 chunk 加载成功</span></span><br><span class="line">      installedChunks[chunkId] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将 chunk 中的 modules 合并到 modules 中</span></span><br><span class="line">    <span class="keyword">for</span>(moduleId <span class="keyword">in</span> moreModules) &#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.hasOwnProperty.call(moreModules, moduleId)) &#123;</span><br><span class="line">        modules[moduleId] = moreModules[moduleId];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);</span><br><span class="line">    <span class="keyword">while</span>(resolves.length)</span><br><span class="line">      resolves.shift()();</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The module cache</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// objects to store loaded and loading chunks</span></span><br><span class="line">  <span class="keyword">var</span> installedChunks = &#123;</span><br><span class="line">    <span class="number">4</span>: <span class="number">0</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The require function</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check if module is in cache</span></span><br><span class="line">    <span class="keyword">if</span>(installedModules[moduleId])</span><br><span class="line">      <span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a new module (and put it into the cache)</span></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line">      i: moduleId,</span><br><span class="line">      l: <span class="literal">false</span>,</span><br><span class="line">      exports: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Execute the module function</span></span><br><span class="line">    modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Flag the module as loaded</span></span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return the exports of the module</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 异步加载分割出去的chunk对应的文件</span></span><br><span class="line"><span class="comment">  * @param &#123;*&#125; chunkId 需要异步加载的 chunk 对应的 id</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  __webpack_require__.e = <span class="function"><span class="keyword">function</span> <span class="title">requireEnsure</span>(<span class="params">chunkId</span>) </span>&#123;</span><br><span class="line">   <span class="comment">// 状态为 0 表示已经加载过</span></span><br><span class="line">    <span class="keyword">if</span>(installedChunks[chunkId] === <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 不为 0 且不为空，表示正在加载，其实返回的是一个 Promise 对象，后面会看到</span></span><br><span class="line">    <span class="keyword">if</span>(installedChunks[chunkId]) &#123;</span><br><span class="line">      <span class="keyword">return</span> installedChunks[chunkId][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 dom 操作插入 script 标签来异步加载 chunk 对应的 js 文件</span></span><br><span class="line">    <span class="keyword">var</span> head = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">    script.type = <span class="string">'text/javascript'</span>;</span><br><span class="line">    script.charset = <span class="string">'utf-8'</span>;</span><br><span class="line">    script.async = <span class="literal">true</span>;</span><br><span class="line">    script.timeout = <span class="number">120000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// CSP 相关</span></span><br><span class="line">    <span class="keyword">if</span> (__webpack_require__.nc) &#123;</span><br><span class="line">      script.setAttribute(<span class="string">"nonce"</span>, __webpack_require__.nc);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 文件的路径由配置的 publicPath, chunkId 拼接而成</span></span><br><span class="line">    script.src = __webpack_require__.p + <span class="string">""</span> + chunkId + <span class="string">".bundle.js"</span>;</span><br><span class="line">    <span class="comment">// 异步加载超时时间</span></span><br><span class="line">    <span class="keyword">var</span> timeout = setTimeout(onScriptComplete, <span class="number">120000</span>);</span><br><span class="line">    <span class="comment">// 加载失败或成功的回调函数</span></span><br><span class="line">    script.onerror = script.onload = onScriptComplete;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">onScriptComplete</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 防止 IE 中内存泄漏</span></span><br><span class="line">      script.onerror = script.onload = <span class="literal">null</span>;</span><br><span class="line">      clearTimeout(timeout);</span><br><span class="line">      <span class="comment">// 检查 chunk 是否加载成功，如果不成功则 reject</span></span><br><span class="line">      <span class="keyword">var</span> chunk = installedChunks[chunkId];</span><br><span class="line">      <span class="keyword">if</span>(chunk !== <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(chunk) chunk[<span class="number">1</span>](<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Loading chunk '</span> + chunkId + <span class="string">' failed.'</span>));</span><br><span class="line">        installedChunks[chunkId] = <span class="literal">undefined</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 返回的 promise，初始化 installedChunks[chunkId] 为 [resolve, reject, promise]</span></span><br><span class="line">    <span class="comment">// 什么时候 resolve ?</span></span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">      installedChunks[chunkId] = [resolve, reject];</span><br><span class="line">    &#125;);</span><br><span class="line">    installedChunks[chunkId][<span class="number">2</span>] = promise;</span><br><span class="line"></span><br><span class="line">    head.appendChild(script);</span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// __webpack_public_path__</span></span><br><span class="line">  __webpack_require__.p = <span class="string">"dist/"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Load entry module and return exports</span></span><br><span class="line">  <span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="number">4</span>);</span><br><span class="line">&#125;)</span><br><span class="line">(&#123;</span><br><span class="line"><span class="comment">// 0 - 3 的 modules 被分割出去了</span></span><br><span class="line"><span class="comment">/***/</span> <span class="number">4</span>:</span><br><span class="line"><span class="comment">/***/</span> (<span class="function"><span class="keyword">function</span>(<span class="params">module, exports, __webpack_require__</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">__webpack_require__.e<span class="comment">/* import() */</span>(<span class="number">3</span>).then(__webpack_require__.bind(<span class="literal">null</span>, <span class="number">0</span>)).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">__webpack_require__.e<span class="comment">/* import() */</span>(<span class="number">2</span>).then(__webpack_require__.bind(<span class="literal">null</span>, <span class="number">1</span>)).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">__webpack_require__.e<span class="comment">/* import() */</span>(<span class="number">1</span>).then(__webpack_require__.bind(<span class="literal">null</span>, <span class="number">2</span>)).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">__webpack_require__.e<span class="comment">/* import() */</span>(<span class="number">0</span>).then(__webpack_require__.bind(<span class="literal">null</span>, <span class="number">3</span>)).then(<span class="function"><span class="params">page</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(page)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">/***/</span> &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><em>0.bundle.js</em></p>
@@ -383,15 +417,15 @@
 <ol>
 <li><p><code>bundle.js</code> 中 modules[4] 模块中执行的 <code>__webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 3)).then(...)</code> 可以分解为两步：其中 <code>__webpack_require__.e/* import() */(0)</code> 是异步加载 chunk, <code>__webpack_require__.bind(null, 3)</code> 为安装模块。</p>
 </li>
-<li><p><code>__webpack_require__.e</code> 主要功能是通过 dom 操作插入 script 标签来异步加载 chunk 对应的 js 文件，新建了一个 Promise 对象 promise，并将 [resolve, reject, promise] 存在 installedChunks 中。</p>
+<li><p><code>__webpack_require__.e</code> 主要功能是通过 dom 操作插入 script 标签来异步加载 chunk 对应的 js 文件，新建了一个 Promise 对象 promise，并将 [resolve, reject, promise] 存在 installedChunks 中。</p>
 </li>
-<li><p>异步加载的 chunk 会执行 <code>webpackJsonp</code> 方法，该方法中会执行 installedChunks 中存放的 resolve 方法，从而通知 modules[4] 中的代码继续执行。</p>
+<li><p>异步加载的 chunk 会执行 <code>webpackJsonp</code> 方法，该方法中会执行 installedChunks 中存放的 resolve 方法，从而通知 modules[4] 中的代码继续执行。</p>
 </li>
 </ol>
 <p>整个过程可以用下图来表示：</p>
 <p><img src="/images/webpack-bundle-dive-into/1.jpeg" alt=""></p>
 <h1 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">  js</span><br><span class="line">    components # 公用组件	</span><br><span class="line">      layout.js</span><br><span class="line">    utils # 公用工具模块</span><br><span class="line">      utils.js</span><br><span class="line">    vendor # 基础库</span><br><span class="line">      react.js</span><br><span class="line">      react-dom.js</span><br><span class="line">    pageA.js</span><br><span class="line">    pageB.js</span><br></pre></td></tr></table></figure>
-<p>有时候网站会由多个页面组成，每个页面都是一个独立的单页面应用，这些页面技术栈相同且包含相同的业务代码，如果每个页面的代码都将这些公共的部分包含进去，势必会造成：1) 相同的资源重复加载 2) 每个页面的体积太大</p>
+<p>有时候网站会由多个页面组成，每个页面都是一个独立的单页面应用，这些页面技术栈相同且包含相同的业务代码，如果每个页面的代码都将这些公共的部分包含进去，势必会造成：1) 相同的资源重复加载 2) 每个页面的体积太大</p>
 <p>为了解决这个问题，可以将公共代码提取出来，具体到上面的例子，我们可能希望最终打包的结果像这样：</p>
 <p><img src="/images/webpack-bundle-dive-into/2.png" alt=""></p>
 <p>为了实现上述要求，可以使用 CommonsChunkPlugin:</p>
@@ -779,6 +813,323 @@
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 
