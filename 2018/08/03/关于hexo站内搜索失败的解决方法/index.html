@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/images/search-problem/local-search.png">
 <meta property="og:image" content="http://yoursite.com/images/search-problem/ASCII-bs.png">
 <meta property="og:image" content="http://yoursite.com/images/search-problem/bs-error.png">
-<meta property="og:updated_time" content="2018-08-03T11:12:18.000Z">
+<meta property="og:updated_time" content="2018-08-03T11:15:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于hexo站内搜索失败的解决方法">
 <meta name="twitter:description" content="在使用hexo的站内搜索时，经常出现，点击搜索按钮后，一直处于loading状态，经查阅资料后发现是因为在写markdown文件的时候出现了一些奇怪的ASCII码，比如表示退格键的BS。">
@@ -1060,7 +1060,7 @@
             }
           }
 
-          if ('auto' === 'manual') {
+          if ('auto' === 'auto') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);
